@@ -13,7 +13,7 @@ BLACK = (0, 0 , 0)
 PADDLE_WIDTH, PADDLE_HEIGHT = 20, 100
 Ball_RADIUS = 7
 
-SCORE_FONT = pygame.font.SysFont("comicsans", 50)
+SCORE_FONT = pygame.font.SysFont("impact", 50)
 
 WINNING_SCORE = 10
 
