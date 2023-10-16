@@ -1,6 +1,5 @@
 from .paddle import Paddle
 from .ball import Ball
-from button import button
 import pygame
 import random
 pygame.init()
@@ -109,16 +108,16 @@ class Game:
         
         self.ball.draw(self.window)
 
-    # def handlePaddleMovement(self, keys):
-    #     if keys[pygame.K_w] and self.leftPaddle.y - Paddle.VEL >= 0:
-    #         self.leftPaddle.move(up=True)
-    #     if keys[pygame.K_s] and self.leftPaddle.y + Paddle.VEL + Paddle.HEIGHT <= self.windowHeight:
-    #         self.leftPaddle.move(up=False)
+    def handlePaddleMovement(self, keys):
+        if keys[pygame.K_w] and self.leftPaddle.y - Paddle.VEL >= 0:
+            self.leftPaddle.move(up=True)
+        if keys[pygame.K_s] and self.leftPaddle.y + Paddle.VEL + Paddle.HEIGHT <= self.windowHeight:
+            self.leftPaddle.move(up=False)
 
-    #     if keys[pygame.K_UP] and self.rightPaddle.y - Paddle.VEL >= 0:
-    #         self.rightPaddle.move(up=True)
-    #     if keys[pygame.K_DOWN] and self.rightPaddle.y + Paddle.VEL + Paddle.HEIGHT <= self.windowHeight:
-#         self.rightPaddle.move(up=False)
+        if keys[pygame.K_UP] and self.rightPaddle.y - Paddle.VEL >= 0:
+            self.rightPaddle.move(up=True)
+        if keys[pygame.K_DOWN] and self.rightPaddle.y + Paddle.VEL + Paddle.HEIGHT <= self.windowHeight:
+            self.rightPaddle.move(up=False)
 
     def movePaddle(self, left=True, up=True):
         if left:
