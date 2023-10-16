@@ -1,5 +1,6 @@
 from .paddle import Paddle
 from .ball import Ball
+from button import button
 import pygame
 import random
 pygame.init()
@@ -14,6 +15,7 @@ class GameInformation:
 class Game:
     WIDTH, HEIGHT = 700, 500
     scoreFont = pygame.font.SysFont("impact", 50)
+    winningScore = 11
     WHITE = (255, 255, 255)
     BLACK = (0, 0 , 0)
     BLUE = (0, 0, 255)
@@ -107,16 +109,33 @@ class Game:
         
         self.ball.draw(self.window)
 
-    def handlePaddleMovement(self, keys):
-        if keys[pygame.K_w] and self.leftPaddle.y - Paddle.VEL >= 0:
-            self.leftPaddle.move(up=True)
-        if keys[pygame.K_s] and self.leftPaddle.y + Paddle.VEL + Paddle.HEIGHT <= self.windowHeight:
-            self.leftPaddle.move(up=False)
+    # def handlePaddleMovement(self, keys):
+    #     if keys[pygame.K_w] and self.leftPaddle.y - Paddle.VEL >= 0:
+    #         self.leftPaddle.move(up=True)
+    #     if keys[pygame.K_s] and self.leftPaddle.y + Paddle.VEL + Paddle.HEIGHT <= self.windowHeight:
+    #         self.leftPaddle.move(up=False)
 
-        if keys[pygame.K_UP] and self.rightPaddle.y - Paddle.VEL >= 0:
-            self.rightPaddle.move(up=True)
-        if keys[pygame.K_DOWN] and self.rightPaddle.y + Paddle.VEL + Paddle.HEIGHT <= self.windowHeight:
-            self.rightPaddle.move(up=False)
+    #     if keys[pygame.K_UP] and self.rightPaddle.y - Paddle.VEL >= 0:
+    #         self.rightPaddle.move(up=True)
+    #     if keys[pygame.K_DOWN] and self.rightPaddle.y + Paddle.VEL + Paddle.HEIGHT <= self.windowHeight:
+#         self.rightPaddle.move(up=False)
+
+    def movePaddle(self, left=True, up=True):
+        if left:
+            if up and self.leftPaddle.y - Paddle.VEL < 0:
+                return False
+            if not up and self.leftPaddle.y + Paddle.HEIGHT > self.windowHeight:
+                return False
+            self.leftPaddle.move(up)
+        else:
+            if up and self.rightPaddle.y - Paddle.VEL < 0:
+                return False
+            if not up and self.rightPaddle.y + Paddle.HEIGHT > self.windowHeight:
+                return False
+            self.rightPaddle.move(up)
+
+        return True
+
 
     def loop(self):
         self.ball.move()
@@ -125,10 +144,28 @@ class Game:
         if self.ball.x < 0:
             self.ball.reset()
             self.rightScore += 1
+            if self.rightScore >= self.winningScore:
+                self.winning(self.BLUE)
+
         elif self.ball.x > self.windowWidth:
             self.ball.reset()
             self.leftScore += 1
+            if self.leftScore >= self.winningScore:
+                self.winning(self.RED)
         
         gameInfo = GameInformation(self.leftHits, self.rightHits, self.leftScore, self.rightScore)
 
         return gameInfo
+    
+    def winning(self, color):
+        if color == self.RED:
+            winText = "Left Player Won!"
+            text = self.scoreFont.render(winText, 1, color)
+        else:
+            winText = "Right Player Won!"
+            text = self.scoreFont.render(winText, 1, color)
+        
+        self.window.blit(text, (self.windowWidth//2 - text.get_width()//2, self.windowHeight//2 - text.get_height()//2))
+        pygame.display.update()
+        pygame.time.delay(5000)
+        self.reset()    
