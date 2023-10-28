@@ -1,6 +1,9 @@
 # ai-pong-game
 
 Directions to play:
+
+  -To play, download both folders (build and dist) with all subfolders as well, then click on main.exe in the folder dist/main.
+  
   -First Player Movement
     *Use 'w' to move up and 's' to move down
 
