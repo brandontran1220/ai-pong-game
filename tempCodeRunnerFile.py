@@ -1,1 +1,0 @@
-left_score, gameInfo.right_score
