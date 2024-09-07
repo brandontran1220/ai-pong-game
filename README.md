@@ -1,4 +1,4 @@
-# ai-pong-game
+# AI Pong Game
 
 Directions to play:
 
